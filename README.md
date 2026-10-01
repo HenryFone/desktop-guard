@@ -74,9 +74,13 @@ $env:DESKTOP_GUARD_BACKUP_DIR = "E:\my-backups"
 .\backup-360-layout.ps1
 ```
 
-## 编译
+## 编译与验证状态
 
-需要 .NET 8 SDK。
+需要 .NET 8 SDK（更高版本 SDK 也能编译，只要装了 net8.0 目标包）。
+
+已验证：Windows 11 22631 + .NET SDK 10.0.301 下 `dotnet build -c Release` 通过，0 警告 0 错误；生成的 `DesktopGuard.exe --once` 实际跑过一次，正确识别出越界坐标并修复（修改前的原值会写进 `guard.log`）。
+
+小坑：PATH 里若同时存在 32 位 dotnet，`dotnet --list-sdks` 可能显示「没有 SDK」——那只是缺 SDK 的 x86 版本，改用 `C:\Program Files\dotnet\dotnet.exe` 即可。
 
 ```powershell
 dotnet build -c Release
